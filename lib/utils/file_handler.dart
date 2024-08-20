@@ -49,15 +49,13 @@ Future<void> openInstaller(File file, String appName) async {
   if (file.existsSync()) {
     if (file.path.endsWith("zip")) {
       final outDir = Directory(p.join(p.dirname(file.path), appName));
-      file = File(
-          outDir.listSync().firstWhere((e) {
-            if (Platform.isWindows) {
-              return e.path.endsWith("exe");
-            } else {
-              return true;
-            }
-          }).path
-      );
+      file = File(outDir.listSync().firstWhere((e) {
+        if (Platform.isWindows) {
+          return e.path.endsWith("exe");
+        } else {
+          return true;
+        }
+      }).path);
     }
     await openUri(Uri(path: file.absolute.path, scheme: 'file'));
   } else {
